@@ -427,9 +427,9 @@ public class Documentation {
 
         portal.withRelation(scroll).withRelation(stableScroll);
 
-        var agronomic = addBasicItem(BlockRegistry.AGRONOMIC_SOURCELINK, SOURCE);
-        var alchemical = addBasicItem(BlockRegistry.ALCHEMICAL_BLOCK, SOURCE).withRelation(wixie).withRelation(melder);
-        var mycelial = addBasicItem(BlockRegistry.MYCELIAL_BLOCK, SOURCE);
+        var agronomic = addBasicItem(BlockRegistry.AGRONOMIC_SOURCELINK, SOURCE, 1);
+        var alchemical = addBasicItem(BlockRegistry.ALCHEMICAL_BLOCK, SOURCE,5).withRelation(wixie).withRelation(melder);
+        var mycelial = addBasicItem(BlockRegistry.MYCELIAL_BLOCK, SOURCE, 2);
 
         var relay = addBasicItem(BlockRegistry.RELAY, SOURCE, CraftingEntry.create(manager.byKeyTyped(RecipeType.CRAFTING, getRegistryName(BlockRegistry.RELAY.get())), Component.translatable("ars_nouveau.page2.relay"))).withRelation(dominionWand);
 
@@ -437,8 +437,8 @@ public class Documentation {
         addBasicItem(BlockRegistry.RELAY_SPLITTER, SOURCE);
         addBasicItem(BlockRegistry.RELAY_WARP, SOURCE);
         addBasicItem(BlockRegistry.RELAY_COLLECTOR, SOURCE);
-        addBasicItem(BlockRegistry.VITALIC_BLOCK, SOURCE);
-        var volcanic = addPage(new DocEntryBuilder(SOURCE, BlockRegistry.VOLCANIC_BLOCK)
+        addBasicItem(BlockRegistry.VITALIC_BLOCK, SOURCE, 3);
+        var volcanic = addPage(new DocEntryBuilder(SOURCE, BlockRegistry.VOLCANIC_BLOCK).withSortNum(4)
                 .withIntroPage()
                 .withPage(TextEntry.create(getLangPath("volcanic_sourcelink", 2), Component.translatable("ars_nouveau.active_generation")))
                 .withCraftingPages(BlockRegistry.VOLCANIC_BLOCK));
@@ -448,9 +448,10 @@ public class Documentation {
                 .withIntroPage()
                 .withLocalizedText()
         ).withRelation(enchantingApparatus);
-        var sourceJar = addBasicItem(BlockRegistry.SOURCE_JAR, SOURCE, 0).withRelation(relay)
+        var sourceJar = addBasicItem(BlockRegistry.SOURCE_JAR, SOURCE, 0)
                 .withRelation(agronomic)
-                .withRelation(volcanic);
+                .withRelation(mycelial)
+                .withRelation(relay);
 
         addPage(new DocEntryBuilder(RITUALS, "performing_rituals")
                 .withSortNum(-1)
