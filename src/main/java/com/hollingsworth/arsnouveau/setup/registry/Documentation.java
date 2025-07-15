@@ -440,7 +440,6 @@ public class Documentation {
         addBasicItem(BlockRegistry.VITALIC_BLOCK, SOURCE, 3);
         var volcanic = addPage(new DocEntryBuilder(SOURCE, BlockRegistry.VOLCANIC_BLOCK).withSortNum(4)
                 .withIntroPage()
-                .withHeaderPage(getLangPath("volcanic_sourcelink", 2), Component.translatable("ars_nouveau.active_generation"))
                 .withCraftingPages(BlockRegistry.VOLCANIC_BLOCK));
         addPage(new DocEntryBuilder(ENCHANTMENTS, "how_to_enchant")
                 .withIcon(BlockRegistry.ENCHANTING_APP_BLOCK)
@@ -743,7 +742,7 @@ public class Documentation {
                 .withSortNum(8)
                 .withIcon(BlockRegistry.SOURCE_JAR)
                 .withIntroPage())
-                .withRelations(sourceJar, agronomic, mycelial, relay);
+                .withRelations(sourceJar, agronomic, mycelial, volcanic, relay);
 
         addPage(new DocEntryBuilder(GETTING_STARTED, "magical_crafting")
                 .withSortNum(9)
