@@ -39,6 +39,10 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
+
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = ArsNouveau.MODID)
 public class ClientEvents {
@@ -114,6 +118,9 @@ public class ClientEvents {
                 event.getTooltipElements().add(Either.right(new SpellTooltip(caster)));
             }
         }
+        if (event.getItemStack().has(DataComponentRegistry.PRESTIDIGITATION)) {
+            event.getTooltipElements().add(Either.left(Component.translatable("ars_nouveau.prestidigitation.tooltip")));
+        }
     }
 
     @SubscribeEvent
@@ -142,7 +149,7 @@ public class ClientEvents {
     public static void onTooltip(final ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         DynamicTooltipRegistry.appendTooltips(stack, event.getContext(), event.getToolTip()::add, event.getFlags());
-        for (var tooltip: ClientInfo.storageTooltip) {
+        for (var tooltip : ClientInfo.storageTooltip) {
             event.getToolTip().add(tooltip);
         }
     }
@@ -156,4 +163,10 @@ public class ClientEvents {
         return Component.translatable(key, params);
     }
 
+    public static final List<Predicate<RecipesUpdatedEvent>> recipeChangeListeners = new ArrayList<>();
+
+    @SubscribeEvent
+    public static void onClientResourcesReload(RecipesUpdatedEvent event) {
+        recipeChangeListeners.removeIf(p -> !p.test(event));
+    }
 }

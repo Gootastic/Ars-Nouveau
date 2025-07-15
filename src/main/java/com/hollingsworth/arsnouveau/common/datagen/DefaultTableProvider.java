@@ -45,6 +45,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -138,6 +139,8 @@ public class DefaultTableProvider extends LootTableProvider {
             registerDropSelf(BlockRegistry.STRIPPED_AWLOG_PURPLE);
             registerDropSelf(BlockRegistry.STRIPPED_AWWOOD_PURPLE);
             registerDropDoor(BlockRegistry.ARCHWOOD_DOOR.get());
+            registerDropSelf(BlockRegistry.ARCHWOOD_SIGN);
+            registerDropSelf(BlockRegistry.ARCHWOOD_HANGING_SIGN);
             registerDropSelf(BlockRegistry.SOURCE_GEM_BLOCK);
 
             registerDropSelf(BlockRegistry.POTION_MELDER);
@@ -192,9 +195,9 @@ public class DefaultTableProvider extends LootTableProvider {
             registerDropSelf(BlockRegistry.POTION_DIFFUSER);
             for (String s : LibBlockNames.DECORATIVE_SOURCESTONE) {
                 registerDropSelf(BlockRegistry.getBlock(s));
-                Block block = BuiltInRegistries.BLOCK.get(ArsNouveau.prefix( s + "_stairs"));
+                Block block = BuiltInRegistries.BLOCK.get(ArsNouveau.prefix(s + "_stairs"));
                 registerDropSelf(block);
-                Block slab = BuiltInRegistries.BLOCK.get(ArsNouveau.prefix( s + "_slab"));
+                Block slab = BuiltInRegistries.BLOCK.get(ArsNouveau.prefix(s + "_slab"));
                 registerDropSelf(slab);
 
             }
@@ -244,7 +247,7 @@ public class DefaultTableProvider extends LootTableProvider {
             registerDropSelf(BlockRegistry.SOURCEBERRY_SACK.get());
             LootItemCondition.Builder lootitemcondition$builder1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(BlockRegistry.MAGE_BLOOM_CROP.get())
                     .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CropBlock.AGE, 7));
-            add(BlockRegistry.MAGE_BLOOM_CROP.get(), createCropDrops(BlockRegistry.MAGE_BLOOM_CROP.get(), ItemsRegistry.MAGE_BLOOM.asItem(), BlockRegistry.MAGE_BLOOM_CROP.get().asItem(),lootitemcondition$builder1, 0));
+            add(BlockRegistry.MAGE_BLOOM_CROP.get(), createCropDrops(BlockRegistry.MAGE_BLOOM_CROP.get(), ItemsRegistry.MAGE_BLOOM.asItem(), BlockRegistry.MAGE_BLOOM_CROP.get().asItem(), lootitemcondition$builder1, 0));
 
             this.add(
                     BlockRegistry.SOURCEBERRY_BUSH.get(),
@@ -279,6 +282,7 @@ public class DefaultTableProvider extends LootTableProvider {
             registerDropSelf(BlockRegistry.SOURCESTONE_GRATE);
             registerDropSelf(BlockRegistry.SOURCE_LAMP);
             registerDropSelf(BlockRegistry.REPOSITORY_CONTROLLER);
+            registerDropSelf(BlockRegistry.DECOR_BLOSSOM);
         }
 
         protected LootTable.Builder createCropDrops(Block pCropBlock, Item pGrownCropItem, Item pSeedsItem, LootItemCondition.Builder pDropGrownCropCondition, int bonus) {
@@ -299,13 +303,13 @@ public class DefaultTableProvider extends LootTableProvider {
         }
 
         @Override
-        protected void add(Block pBlock, LootTable.Builder pBuilder) {
+        protected void add(@NotNull Block pBlock, LootTable.@NotNull Builder pBuilder) {
             list.add(pBlock);
             super.add(pBlock, pBuilder);
         }
 
         @Override
-        protected void add(Block pBlock, Function<Block, LootTable.Builder> pFactory) {
+        protected void add(@NotNull Block pBlock, @NotNull Function<Block, LootTable.Builder> pFactory) {
             list.add(pBlock);
             super.add(pBlock, pFactory);
         }
@@ -350,7 +354,7 @@ public class DefaultTableProvider extends LootTableProvider {
 
 
         @Override
-        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
+        public void generate(@NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
             this.generate();
             Set<ResourceKey<LootTable>> set = new HashSet<>();
 
@@ -400,7 +404,7 @@ public class DefaultTableProvider extends LootTableProvider {
         }
 
         @Override
-        protected Iterable<Block> getKnownBlocks() {
+        protected @NotNull Iterable<Block> getKnownBlocks() {
             return BuiltInRegistries.BLOCK.stream().filter(block -> BuiltInRegistries.BLOCK.getKey(block).getNamespace().equals(ArsNouveau.MODID)).collect(Collectors.toList());
         }
 
@@ -410,7 +414,7 @@ public class DefaultTableProvider extends LootTableProvider {
     public static class EntityLootTable extends EntityLootSubProvider {
         private final Map<EntityType<?>, Map<ResourceKey<LootTable>, LootTable.Builder>> map = Maps.newHashMap();
 
-        protected EntityLootTable(HolderLookup.Provider pRegistries){
+        protected EntityLootTable(HolderLookup.Provider pRegistries) {
             super(FeatureFlags.REGISTRY.allFlags(), pRegistries);
         }
 
@@ -437,13 +441,13 @@ public class DefaultTableProvider extends LootTableProvider {
         }
 
         @Override
-        protected void add(EntityType<?> pEntityType, LootTable.Builder pBuilder) {
+        protected void add(@NotNull EntityType<?> pEntityType, LootTable.@NotNull Builder pBuilder) {
             super.add(pEntityType, pBuilder);
             this.map.put(pEntityType, ImmutableMap.of(pEntityType.getDefaultLootTable(), pBuilder));
         }
 
         @Override
-        protected void add(EntityType<?> pEntityType, ResourceKey<LootTable> pLootTableLocation, LootTable.Builder pBuilder) {
+        protected void add(@NotNull EntityType<?> pEntityType, @NotNull ResourceKey<LootTable> pLootTableLocation, LootTable.@NotNull Builder pBuilder) {
             super.add(pEntityType, pLootTableLocation, pBuilder);
             this.map.computeIfAbsent(pEntityType, (p_249004_) -> {
                 return Maps.newHashMap();
@@ -451,7 +455,7 @@ public class DefaultTableProvider extends LootTableProvider {
         }
 
         @Override
-        public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
+        public void generate(@NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> pGenerator) {
             this.generate();
             Set<ResourceKey<LootTable>> set = Sets.newHashSet();
             this.getKnownEntityTypes().map(EntityType::builtInRegistryHolder).forEach((p_249003_) -> {
@@ -479,13 +483,13 @@ public class DefaultTableProvider extends LootTableProvider {
         }
 
         @Override
-        protected Stream<EntityType<?>> getKnownEntityTypes() {
+        protected @NotNull Stream<EntityType<?>> getKnownEntityTypes() {
             return BuiltInRegistries.ENTITY_TYPE.stream().filter(block -> BuiltInRegistries.ENTITY_TYPE.getKey(block).getNamespace().equals(ArsNouveau.MODID)).toList().stream();
         }
     }
 
     @Override
-    protected void validate(WritableRegistry<LootTable> writableregistry, ValidationContext validationcontext, ProblemReporter.Collector problemreporter$collector) {
+    protected void validate(@NotNull WritableRegistry<LootTable> writableregistry, @NotNull ValidationContext validationcontext, ProblemReporter.@NotNull Collector problemreporter$collector) {
 
     }
 }

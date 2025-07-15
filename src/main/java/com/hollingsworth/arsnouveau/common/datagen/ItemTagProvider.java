@@ -19,26 +19,28 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 
 public class ItemTagProvider extends IntrinsicHolderTagsProvider<Item> {
-    public static TagKey<Item> SUMMON_BED_ITEMS = ItemTags.create(ArsNouveau.prefix( "summon_bed"));
+    public static TagKey<Item> SUMMON_BED_ITEMS = ItemTags.create(ArsNouveau.prefix("summon_bed"));
     public static TagKey<Item> SOURCE_GEM_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "gems/source"));
     public static TagKey<Item> SOURCE_GEM_BLOCK_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks/source"));
     public static TagKey<Item> ARCHWOOD_LOG_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "logs/archwood"));
-    public static TagKey<Item> MAGIC_FOOD = ItemTags.create(ArsNouveau.prefix( "magic_food"));
-    public static TagKey<Item> WILDEN_DROP_TAG = ItemTags.create(ArsNouveau.prefix( "wilden_drop"));
-    public static TagKey<Item> SHARD_TAG = ItemTags.create(ArsNouveau.prefix( "golem/shard"));
+    public static TagKey<Item> ARCHWOOD_STRIPPED_LOG_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "logs/archwood_stripped"));
+    public static TagKey<Item> MAGIC_FOOD = ItemTags.create(ArsNouveau.prefix("magic_food"));
+    public static TagKey<Item> WILDEN_DROP_TAG = ItemTags.create(ArsNouveau.prefix("wilden_drop"));
+    public static TagKey<Item> SHARD_TAG = ItemTags.create(ArsNouveau.prefix("golem/shard"));
     public static TagKey<Item> BERRY_TAG = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "fruits/berry"));
-    public static final TagKey<Item> SUMMON_SHARDS_TAG = ItemTags.create(ArsNouveau.prefix( "magic_shards"));
-    public static TagKey<Item> JAR_ITEM_BLACKLIST = ItemTags.create(ArsNouveau.prefix( "interact_jar_blacklist"));
-    public static TagKey<Item> RITUAL_LOOT_BLACKLIST = ItemTags.create(ArsNouveau.prefix( "ritual_loot_blacklist"));
-    public static TagKey<Item> RITUAL_TRADE_BLACKLIST = ItemTags.create(ArsNouveau.prefix( "ritual_trade_blacklist"));
+    public static final TagKey<Item> SUMMON_SHARDS_TAG = ItemTags.create(ArsNouveau.prefix("magic_shards"));
+    public static TagKey<Item> JAR_ITEM_BLACKLIST = ItemTags.create(ArsNouveau.prefix("interact_jar_blacklist"));
+    public static TagKey<Item> RITUAL_LOOT_BLACKLIST = ItemTags.create(ArsNouveau.prefix("ritual_loot_blacklist"));
+    public static TagKey<Item> RITUAL_TRADE_BLACKLIST = ItemTags.create(ArsNouveau.prefix("ritual_trade_blacklist"));
     public static TagKey<Item> STORAGE_BLOCKS_QUARTZ = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "storage_blocks/quartz"));
-    public static TagKey<Item> SHADY_WIZARD_FRUITS = ItemTags.create(ArsNouveau.prefix( "shady_wizard_fruits"));
+    public static TagKey<Item> SHADY_WIZARD_FRUITS = ItemTags.create(ArsNouveau.prefix("shady_wizard_fruits"));
 
     public static TagKey<Item> MAGIC_ARMOR = ItemTags.create(ArsNouveau.prefix("magic_armor"));
     public static TagKey<Item> MAGIC_HOOD = ItemTags.create(ArsNouveau.prefix("magic_hood"));
     public static TagKey<Item> MAGIC_ROBE = ItemTags.create(ArsNouveau.prefix("magic_robe"));
     public static TagKey<Item> MAGIC_LEGS = ItemTags.create(ArsNouveau.prefix("magic_legs"));
     public static TagKey<Item> MAGIC_BOOT = ItemTags.create(ArsNouveau.prefix("magic_boots"));
+    public static TagKey<Item> APPARATUS_PRESERVES = ItemTags.create(ArsNouveau.prefix("apparatus_not_consumed"));
 
 
     public ItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> future, ExistingFileHelper helper) {
@@ -67,7 +69,7 @@ public class ItemTagProvider extends IntrinsicHolderTagsProvider<Item> {
                 BlockRegistry.BOMBEGRANTE_POD.asItem(),
                 BlockRegistry.MENDOSTEEN_POD.asItem(),
                 BlockRegistry.BASTION_POD.asItem());
-        this.tag(ItemTags.create(ArsNouveau.prefix( "whirlisprig/denied_drop")))
+        this.tag(ItemTags.create(ArsNouveau.prefix("whirlisprig/denied_drop")))
                 .add(Items.DIRT).addTag(Tags.Items.SEEDS);
 
         this.tag(Tags.Items.RANGED_WEAPON_TOOLS).add(ItemsRegistry.SPELL_BOW.get(), ItemsRegistry.SPELL_CROSSBOW.get());
@@ -114,6 +116,19 @@ public class ItemTagProvider extends IntrinsicHolderTagsProvider<Item> {
                 BlockRegistry.STRIPPED_AWLOG_PURPLE.asItem(),
                 BlockRegistry.STRIPPED_AWWOOD_PURPLE.asItem()
         );
+        this.tag(ARCHWOOD_STRIPPED_LOG_TAG).add(
+                BlockRegistry.STRIPPED_AWLOG_BLUE.asItem(),
+                BlockRegistry.STRIPPED_AWLOG_GREEN.asItem(),
+                BlockRegistry.STRIPPED_AWLOG_RED.asItem(),
+                BlockRegistry.STRIPPED_AWLOG_PURPLE.asItem()
+        );
+        this.tag(Tags.Items.STRIPPED_LOGS).addTag(ARCHWOOD_STRIPPED_LOG_TAG);
+        this.tag(Tags.Items.STRIPPED_WOODS).add(
+                BlockRegistry.STRIPPED_AWWOOD_BLUE.asItem(),
+                BlockRegistry.STRIPPED_AWWOOD_GREEN.asItem(),
+                BlockRegistry.STRIPPED_AWWOOD_RED.asItem(),
+                BlockRegistry.STRIPPED_AWWOOD_PURPLE.asItem()
+        );
         this.tag(ItemTags.LEAVES).add(BlockRegistry.VEXING_LEAVES.asItem(),
                 BlockRegistry.CASCADING_LEAVE.asItem(),
                 BlockRegistry.BLAZING_LEAVES.asItem(),
@@ -135,8 +150,6 @@ public class ItemTagProvider extends IntrinsicHolderTagsProvider<Item> {
                 BlockRegistry.STRIPPED_AWWOOD_RED.asItem(),
                 BlockRegistry.STRIPPED_AWLOG_PURPLE.asItem(),
                 BlockRegistry.STRIPPED_AWWOOD_PURPLE.asItem()
-
-
         );
         this.tag(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "planks/archwood")))
                 .add(BlockRegistry.ARCHWOOD_PLANK.asItem());
@@ -243,5 +256,6 @@ public class ItemTagProvider extends IntrinsicHolderTagsProvider<Item> {
         this.tag(Tags.Items.MINING_TOOL_TOOLS).add(ItemsRegistry.ENCHANTERS_GAUNTLET.get());
         this.tag(ItemTags.MINING_ENCHANTABLE).add(ItemsRegistry.ENCHANTERS_GAUNTLET.get());
         this.tag(ItemTags.MINING_LOOT_ENCHANTABLE).add(ItemsRegistry.ENCHANTERS_GAUNTLET.get());
+        this.tag(APPARATUS_PRESERVES).add(ItemsRegistry.SPELL_PARCHMENT.get());
     }
 }
