@@ -170,7 +170,6 @@ public class Documentation {
         var mobJar = addPage(new DocEntryBuilder(MACHINES, "mob_jar")
                 .withIcon(BlockRegistry.MOB_JAR)
                 .withIntroPage()
-                .withHeaderPage("ars_nouveau.page2.mob_jar", "ars_nouveau.title.mob_jar")
                 .withPage(EntityEntry.create(EntityType.VILLAGER, Component.translatable("mob_jar.villager")))
                 .withPage(EntityEntry.create(EntityType.PIGLIN, Component.translatable("mob_jar.piglin")))
                 .withHeaderPage("mob_jar.allay", "mob_jar.allay.title")
@@ -258,8 +257,7 @@ public class Documentation {
                 .withLocalizedText(BlockRegistry.ENCHANTED_SPELL_TURRET)
                 .withCraftingPages(BlockRegistry.ENCHANTED_SPELL_TURRET)
                 .withLocalizedText(BlockRegistry.TIMER_SPELL_TURRET)
-                .withCraftingPages(BlockRegistry.TIMER_SPELL_TURRET)
-                .withLocalizedText());
+                .withCraftingPages(BlockRegistry.TIMER_SPELL_TURRET).withName("ars_nouveau.spell_turrets"));
 
         addBasicItem(ItemsRegistry.SUMMONING_FOCUS, SPELL_CASTING);
         addBasicItem(ItemsRegistry.VOID_JAR, EQUIPMENT);
@@ -679,7 +677,8 @@ public class Documentation {
         addPage(new DocEntryBuilder(AUTOMATION, BlockRegistry.ARCHWOOD_GRATE)
                 .withIntroPage()
                 .withCraftingPages(BlockRegistry.ARCHWOOD_GRATE, BlockRegistry.GOLD_GRATE)
-                .withCraftingPages(BlockRegistry.SMOOTH_SOURCESTONE_GRATE, BlockRegistry.SOURCESTONE_GRATE));
+                .withCraftingPages(BlockRegistry.SMOOTH_SOURCESTONE_GRATE, BlockRegistry.SOURCESTONE_GRATE).withName("ars_nouveau.grates"));
+
         addBasicItem(BlockRegistry.SOURCE_LAMP, AUTOMATION);
 
         addPage(new DocEntryBuilder(AUTOMATION, ItemsRegistry.ALAKARKINOS_CHARM)
